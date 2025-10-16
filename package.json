@@ -1,0 +1,11 @@
+{
+  "name": "todo-app-xyz",
+  "version": "1.0.0",
+  "description": "Create a simple to-do list app where users can add tasks, mark them complete, and delete them. Display tasks in a clean list.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000"
+  },
+  "author": "student@example.com",
+  "license": "MIT"
+}
