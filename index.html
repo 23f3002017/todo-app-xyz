@@ -22,6 +22,10 @@
         #addTaskButton {
             padding: 10px 20px;
         }
+        #sortTasksButton {
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
         ul {
             list-style-type: none;
             padding: 0;
@@ -59,48 +63,73 @@
     </style>
 </head>
 <body>
-    <h1>To-Do List</h1>
-    <input type="text" id="taskInput" aria-label="New task" placeholder="Add a new task..." />
+    <h1>To-Do List App</h1>
+    <input type="text" id="taskInput" placeholder="Add a new task...">
     <button id="addTaskButton">Add Task</button>
-    <ul id="taskList" aria-live="polite"></ul>
-    <div id="emptyState" class="empty-state" aria-hidden="true">No tasks available. Add a task to get started!</div>
+    <button id="sortTasksButton">Sort Tasks</button>
+    <ul id="taskList"></ul>
+    <div class="empty-state" id="emptyState">No tasks available</div>
 
     <script>
         const taskInput = document.getElementById('taskInput');
         const addTaskButton = document.getElementById('addTaskButton');
         const taskList = document.getElementById('taskList');
         const emptyState = document.getElementById('emptyState');
+        const sortTasksButton = document.getElementById('sortTasksButton');
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-        let tasks = []; // Array to hold tasks
-
-        // Function to render tasks
         function renderTasks() {
-            // Clear the current task list
             taskList.innerHTML = '';
             if (tasks.length === 0) {
-                // Show empty state if no tasks
-                emptyState.setAttribute('aria-hidden', 'false');
+                emptyState.style.display = 'block';
             } else {
-                emptyState.setAttribute('aria-hidden', 'true');
-                // Populate the task list
+                emptyState.style.display = 'none';
                 tasks.forEach((task, index) => {
                     const li = document.createElement('li');
                     li.textContent = task.text;
                     if (task.completed) {
-                        li.classList.add('completed'); // Mark as completed
+                        li.classList.add('completed');
                     }
-                    // Create a checkbox for completing task
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.checked = task.completed;
-                    checkbox.addEventListener('change', () => {
-                        task.completed = checkbox.checked; // Update completed status
-                        renderTasks(); // Re-render tasks
-                    });
-                    li.prepend(checkbox);
-                    
-                    // Create delete button
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = 'Delete';
                     deleteButton.className = 'deleteButton';
-                    deleteButton
+                    deleteButton.onclick = () => {
+                        tasks.splice(index, 1);
+                        saveTasks();
+                        renderTasks();
+                    };
+                    li.appendChild(deleteButton);
+                    taskList.appendChild(li);
+                });
+            }
+        }
+
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        addTaskButton.onclick = () => {
+            const taskText = taskInput.value;
+            if (taskText) {
+                const newTask = {
+                    text: taskText,
+                    completed: false,
+                    createdAt: new Date().getTime()
+                };
+                tasks.push(newTask);
+                taskInput.value = '';
+                saveTasks();
+                renderTasks();
+            }
+        };
+
+        sortTasksButton.onclick = () => {
+            tasks.sort((a, b) => a.createdAt - b.createdAt);
+            saveTasks();
+            renderTasks();
+        };
+
+        renderTasks();
+    </script>
+</body>
+</html>

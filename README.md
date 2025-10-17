@@ -1,13 +1,11 @@
 # todo-app-xyz
 
 ## Overview
-Create a simple to-do list app where users can add tasks, mark them complete, and delete them. Display tasks in a clean list.
+Add ability to sort tasks by date created
 
-## Requirements Checklist
-- [ ] Can add new tasks
-- [ ] Can mark tasks as complete
-- [ ] Can delete tasks
-- [ ] Shows empty state message when no tasks
+## Updated Requirements Checklist (Round 2)
+- [ ] Tasks can be sorted
+- [ ] Sorted order persists
 
 ## Setup
 1. Clone this repository:
@@ -29,7 +27,7 @@ Open the page and interact with the application. All functionality is contained 
 - `README.md` - This file
 
 ## Code Explanation
-This is a single-file HTML application auto-generated using OpenRouter LLMs via AIpipe.
+This is a single-file HTML application auto-generated and improved using OpenRouter LLMs via AIpipe.
 
 **Key Features:**
 - Fully self-contained (no build step needed)
@@ -51,4 +49,4 @@ Works in all modern browsers (Chrome, Firefox, Safari, Edge)
 MIT License - See LICENSE file for full details
 
 ---
-*Generated automatically*
+*Generated and improved automatically (Round 2)*
